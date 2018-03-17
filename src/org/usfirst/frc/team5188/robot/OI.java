@@ -3,6 +3,11 @@ package org.usfirst.frc.team5188.robot;
 
 
 import org.usfirst.frc.team5188.robot.commands.ElevatorRaiseTo;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.Base1;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.CLSW;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.CRSW;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.SWL;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.SWR;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -16,6 +21,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 
+
+	
 	public static class Controller {
 		public static final int DRIVE = 0, OPERATOR = 1;
 	}
@@ -72,7 +79,16 @@ public class OI {
 		JoystickButton goToSwitch = new JoystickButton(operator, OI.Buttons.A);
 		//goToSwitch.whenPressed(new ElevatorRaiseTo(36));
 
+		SmartDashboard.putData("BaseLine", new Base1());
+		SmartDashboard.putData("CenterLeftSwitch", new CLSW());
+		SmartDashboard.putData("CenterRightSwitch", new CRSW());
+		SmartDashboard.putData("RightSwitch", new SWR());
+		SmartDashboard.putData("LeftSwitch", new SWL());
 		
+		SmartDashboard.putData("DriveTraive", Robot.driveTrain);
+		SmartDashboard.putData("Elevator", Robot.elevator);
+		SmartDashboard.putData("Intake", Robot.intake);
+
 
 		SmartDashboard.putData(Scheduler.getInstance());
 		

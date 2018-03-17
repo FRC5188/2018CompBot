@@ -19,6 +19,7 @@ public class IntakeCommand extends Command {
 		double rightTrigger = Robot.oi.operator.getAxis(OI.Axis.RTrigger);
 		boolean leftButton =  Robot.oi.operator.getRawButton(OI.Buttons.L);
 		boolean rightButton =  Robot.oi.operator.getRawButton(OI.Buttons.R);
+		boolean xButton = Robot.oi.operator.getRawButton(OI.Buttons.X);
 
 		
 
@@ -36,6 +37,10 @@ public class IntakeCommand extends Command {
 		else if(rightButton == true) {
 			Robot.intake.intake(.7);
 
+		}
+		else if(xButton == true) {
+			Robot.intake.setRightIntake(.7);
+			Robot.intake.setLeftIntake(-.4);
 		}
 		else {
 			Robot.intake.stop();

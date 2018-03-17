@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem {
 
-	VictorSP leftIntake; 
-	VictorSP rightIntake;
+	private VictorSP leftIntake; 
+	private VictorSP rightIntake;
 
 	public Intake(){
 		 leftIntake = new VictorSP(RobotMap.leftIntake);
@@ -18,6 +18,13 @@ public class Intake extends Subsystem {
 		 
 	}
 	
+	public void setLeftIntake(double speed) {
+		leftIntake.set(speed);
+	}
+	
+	public void setRightIntake(double speed) {
+		rightIntake.set(speed);
+	}
 	public void stop() {
 		intake(0);
 	}

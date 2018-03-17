@@ -13,7 +13,7 @@ public class CLSW extends Command {
 		
 //		Robot.driveTrain.drive(.5, .5, -.3);
 //		Timer.delay(4);
-		}
+		
 		return false;
 	}
 
