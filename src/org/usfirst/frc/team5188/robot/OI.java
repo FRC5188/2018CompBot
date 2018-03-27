@@ -3,11 +3,11 @@ package org.usfirst.frc.team5188.robot;
 
 
 import org.usfirst.frc.team5188.robot.commands.ElevatorRaiseTo;
-import org.usfirst.frc.team5188.robot.commands.AutoPaths.Base1;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.BaseLineTime;
 import org.usfirst.frc.team5188.robot.commands.AutoPaths.CLSW;
 import org.usfirst.frc.team5188.robot.commands.AutoPaths.CRSW;
-import org.usfirst.frc.team5188.robot.commands.AutoPaths.SWL;
-import org.usfirst.frc.team5188.robot.commands.AutoPaths.SWR;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.SwitchLeftSideTime;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.SwitchRightSideTime;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -77,13 +77,8 @@ public class OI {
 		operator = new SuperJoystickPlus(Controller.OPERATOR);
 		
 		JoystickButton goToSwitch = new JoystickButton(operator, OI.Buttons.A);
-		//goToSwitch.whenPressed(new ElevatorRaiseTo(36));
 
-		SmartDashboard.putData("BaseLine", new Base1());
-		SmartDashboard.putData("CenterLeftSwitch", new CLSW());
-		SmartDashboard.putData("CenterRightSwitch", new CRSW());
-		SmartDashboard.putData("RightSwitch", new SWR());
-		SmartDashboard.putData("LeftSwitch", new SWL());
+		
 		
 		SmartDashboard.putData("DriveTraive", Robot.driveTrain);
 		SmartDashboard.putData("Elevator", Robot.elevator);
@@ -99,27 +94,5 @@ public class OI {
 	}
 	
 	
-	//we tune our pid by using the robot preferences, this method updates those values
-//	public void rereadPreferences() {
-//		TURN_TO_DEGREE_P = pref.getDouble("TurnToDegree P", Double.POSITIVE_INFINITY);
-//		TURN_TO_DEGREE_I = pref.getDouble("TurnToDegree I", Double.POSITIVE_INFINITY);
-//		TURN_TO_DEGREE_D = pref.getDouble("TurnToDegree D", Double.POSITIVE_INFINITY);
-//		TURN_TO_DEGREE_ANGLE = pref.getDouble("TurnToDegree Angle", Double.POSITIVE_INFINITY);
-//		DRIVE_STAIGHT_P = pref.getDouble("DriveStaight P", Double.POSITIVE_INFINITY);
-//		DRIVE_STAIGHT_I = pref.getDouble("DriveStaight I", Double.POSITIVE_INFINITY);
-//		DRIVE_STAIGHT_D = pref.getDouble("DriveStaight D", Double.POSITIVE_INFINITY);
-//
-//		// if these are not provided
-//		if (TURN_TO_DEGREE_P == Double.POSITIVE_INFINITY) {
-//			pref.putDouble("TurnToDegree P", 0);
-//			pref.putDouble("TurnToDegree I", 0);
-//			pref.putDouble("TurnToDegree D", 0);
-//			pref.putDouble("TurnToDegree Angle", 0);
-//
-//			TURN_TO_DEGREE_P = 0;
-//			TURN_TO_DEGREE_I = 0;
-//			TURN_TO_DEGREE_D = 0;
-//			TURN_TO_DEGREE_ANGLE = 0;
-//		}
-//	}
+	
 }

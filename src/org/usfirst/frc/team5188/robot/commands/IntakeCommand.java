@@ -25,17 +25,17 @@ public class IntakeCommand extends Command {
 
 		
 		if(leftTrigger > 0.05) {
-			Robot.intake.intake(-leftTrigger * 1);  
+			Robot.intake.intake(-leftTrigger * .6);  
 		}
 		else if(rightTrigger > 0.05) {
 			Robot.intake.intake(rightTrigger * 1);
 		}
 		else if(leftButton == true) {
-			Robot.intake.intake(-.7);
+			Robot.intake.intake(-.3);
 
 		}
 		else if(rightButton == true) {
-			Robot.intake.intake(.7);
+			Robot.intake.intake(.3);
 
 		}
 		else if(xButton == true) {

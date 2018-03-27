@@ -2,20 +2,20 @@
 package org.usfirst.frc.team5188.robot;
 
 import org.usfirst.frc.team5188.robot.commands.NullCommand;
-import org.usfirst.frc.team5188.robot.commands.AutoPaths.Base1;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.BaseLineTime;
 import org.usfirst.frc.team5188.robot.commands.AutoPaths.CLSW;
 import org.usfirst.frc.team5188.robot.commands.AutoPaths.CRSW;
 import org.usfirst.frc.team5188.robot.commands.AutoPaths.SCL;
 import org.usfirst.frc.team5188.robot.commands.AutoPaths.SCR;
-import org.usfirst.frc.team5188.robot.commands.AutoPaths.SWL;
-import org.usfirst.frc.team5188.robot.commands.AutoPaths.SWR;
-import org.usfirst.frc.team5188.robot.commands.DriverStations.DS1;
-import org.usfirst.frc.team5188.robot.commands.DriverStations.DS2;
-import org.usfirst.frc.team5188.robot.commands.DriverStations.DS3;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.ScaleLeftTime;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.ScaleRightTime;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.SwitchLeftSideTime;
+import org.usfirst.frc.team5188.robot.commands.AutoPaths.SwitchRightSideTime;
 import org.usfirst.frc.team5188.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5188.robot.subsystems.Elevator;
 import org.usfirst.frc.team5188.robot.subsystems.Intake;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -35,29 +35,29 @@ public class Robot extends IterativeRobot {
 	
 	//init auto choosers 
 	//SendableChooser<Command> driverStations = new SendableChooser<>();
-	SendableChooser<Command> autoOptions = new SendableChooser<>();
+	SendableChooser<Command> rightAutoOptions = new SendableChooser<>();
+	SendableChooser<Command> leftAutoOptions = new SendableChooser<>();
+	SendableChooser<String> driverSide = new SendableChooser<>();
+
 
 	
 	final String TIMERBOX = "Timer Box";
-	final String DS1 = "ds1";
-	final String DS2 = "ds2";
-	final String DS3 = "ds3";
-	final String BASE1 = "Base1";
+	final String baseTime = "baseLineTime";
 	final String SWR = "SWR";
 	final String SWL = "SWL";
 	final String SCR = "SCR";
 	final String SCL = "SCL";
 	final String CRSW = "CRSW";
 	final String CLSW = "CLSW";
+	final String LEFT = "left";
+	final String RIGHT = "right";
+
 
 	String gameData;
-	String driverStationPos;	
-	boolean ds1, ds2, ds3;
 	
 	double delayLength;
 	
 	Command selectedAuto;
-	Command driverStationSelected;
 	
 	@Override
 	public void robotInit() {
@@ -65,19 +65,30 @@ public class Robot extends IterativeRobot {
 		
 		elevator = new Elevator();
 		intake = new Intake();
+		
+		CameraServer.getInstance().startAutomaticCapture();
 				
 				
 		SmartDashboard.putNumber(TIMERBOX, 0.0);		
 
 		
-		autoOptions.addDefault("Null", new NullCommand());
-		autoOptions.addObject("Baseline1", new Base1());
-		autoOptions.addObject("Right Switch", new SWR());
-		autoOptions.addObject("Left Switch", new SWL());
-		autoOptions.addObject("Center Right Switch", new CRSW());
-		autoOptions.addObject("Center Left Switch", new CLSW());
-		autoOptions.addObject("Right Scale", new SCR());
-		autoOptions.addObject("Left Scale", new SCL());
+		rightAutoOptions.addDefault("Null", new NullCommand());
+		rightAutoOptions.addObject("BaseLineTime", new BaseLineTime());
+		rightAutoOptions.addObject("Scale Right Time", new ScaleRightTime());
+		rightAutoOptions.addObject("Switch Right Time", new SwitchRightSideTime());
+		
+		leftAutoOptions.addDefault("Null", new NullCommand());
+		leftAutoOptions.addObject("BaseLineTime", new BaseLineTime());
+		leftAutoOptions.addObject("Scale Left Time", new ScaleLeftTime());
+		leftAutoOptions.addObject("Switch Left Time", new SwitchLeftSideTime());
+
+		driverSide.addObject(LEFT, LEFT);
+		driverSide.addObject(RIGHT, RIGHT);		
+				
+		//autoOptions.addObject("Center Right Switch", new CRSW());
+		//autoOptions.addObject("Center Left Switch", new CLSW());
+		//autoOptions.addObject("Right Scale", new SCR());
+		//autoOptions.addObject("Left Scale", new SCL());
 
 		
 ////		driverStations.addDefault("Null", new NullCommand());
@@ -85,7 +96,10 @@ public class Robot extends IterativeRobot {
 ////		driverStations.addObject("DriverStation 2", new DS2());
 ////		driverStations.addObject("DriverStation 3", new DS3());
 //
-		SmartDashboard.putData("Auto Options", autoOptions);
+		SmartDashboard.putData("Right Auto Options", rightAutoOptions);
+		SmartDashboard.putData("Left Auto Options", leftAutoOptions);
+		SmartDashboard.putData("auto side", driverSide);
+
 //		SmartDashboard.putData("Driver Stations", driverStations);
 
 		
@@ -111,27 +125,31 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		gameData =  DriverStation.getInstance().getGameSpecificMessage();
-		delayLength = SmartDashboard.getNumber(TIMERBOX, 0);
 		
-//		driverStationPos = driverStations.getSelected().getName();
+		
+//		delayLength = SmartDashboard.getNumber(TIMERBOX, 0);
+		
+//		selectedAuto = rightAutoOptions.getSelected();
+		
+		
+		if(gameData.charAt(1) == 'L') {
+//			Timer.delay(delayLength);
+			selectedAuto = leftAutoOptions.getSelected();
+			
+			selectedAuto.start();
+			
+		} else {
+//			Timer.delay(delayLength);
+			selectedAuto = rightAutoOptions.getSelected();
+			selectedAuto.start();
 
-
-		// schedule the autonomous command (example)
-//		if (autonomousCommand != null)
-//			autonomousCommand.start();
-	}
+		}	}
 
 	
 	@Override
 	public void autonomousPeriodic() {
-		if(gameData.charAt(0) == 'L') {
-			Timer.delay(delayLength);
 		
-			
-		} else {
-			Timer.delay(delayLength);
-
-		}
+		
 		Scheduler.getInstance().run();
 	}
 
@@ -158,7 +176,7 @@ public class Robot extends IterativeRobot {
 //		}
 		
 		if(Robot.oi.drive.getRawButton(OI.Buttons.X)) {
-			Command baseline = new Base1();
+			Command baseline = new BaseLineTime();
 			baseline.start();
 		}
 		
@@ -174,17 +192,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(Scheduler.getInstance());
 		
 //		driverStationPos = driverStations.getSelected().getName();
-		selectedAuto = autoOptions.getSelected(); 
-//		SmartDashboard.putBoolean(BASE1, false);
-//		SmartDashboard.putBoolean(SWR, false);
-//		SmartDashboard.putBoolean(SWL, false);
-//		SmartDashboard.putBoolean(SCR, false);
-//		SmartDashboard.putBoolean(SCL, false);
-//		SmartDashboard.putBoolean(CRSW, false);
-//		SmartDashboard.putBoolean(CLSW, false);
+		selectedAuto = rightAutoOptions.getSelected(); 
 
-		
-		if(selectedAuto.getName().equals(BASE1)) SmartDashboard.putBoolean(BASE1, true);
+		if(selectedAuto.getName().equals(baseTime)) SmartDashboard.putBoolean(baseTime, true);
 		if(selectedAuto.getName().equals(SWR)) SmartDashboard.putBoolean(SWR, true);
 		if(selectedAuto.getName().equals(SWL)) SmartDashboard.putBoolean(SWL, true);
 		if(selectedAuto.getName().equals(SCR)) SmartDashboard.putBoolean(SCR, true);
@@ -195,17 +205,6 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(Robot.driveTrain);
 
-		
-	
-
-
-//		SmartDashboard.putBoolean(DS1, false);
-//		SmartDashboard.putBoolean(DS2, false);
-//		SmartDashboard.putBoolean(DS3, false);
-		
-//		if(driverStationPos.equals("DS1")) SmartDashboard.putBoolean(DS1, true);
-//		if(driverStationPos.equals("DS2")) SmartDashboard.putBoolean(DS2, true);
-//		if(driverStationPos.equals("DS3")) SmartDashboard.putBoolean(DS3, true);
 	}
 
 	/** Prevent button creep */

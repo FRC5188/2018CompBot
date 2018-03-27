@@ -22,8 +22,8 @@ public class Elevator extends Subsystem {
 		leftMotor = new VictorSP(RobotMap.leftElevator);
 		rightMotor = new VictorSP(RobotMap.rightElevator);
 		
-	//	bottomHalleffect =  new DigitalInput(RobotMap.bottomHalleffect);
-	//	topHalleffect =  new DigitalInput(RobotMap.topHalleffect);
+		bottomHalleffect =  new DigitalInput(RobotMap.bottomHalleffect);
+		topHalleffect =  new DigitalInput(RobotMap.topHalleffect);
 
 	//	elevatorEncoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
 	}
@@ -33,18 +33,18 @@ public class Elevator extends Subsystem {
 	}
 	
 	public boolean validMove(double power) {
-//		boolean isValid = false;
-//		if(power < 0 && bottomHalleffect.get()) {
-//			isValid = false;
-//		}
-//		else if(power > 0 && topHalleffect.get()){
-//			isValid = false;
-//		}
-//		else {
-//			isValid = true;
-//		}
+		boolean isValid = false;
+		if(power < 0 && !bottomHalleffect.get()) {
+			isValid = false;
+		}
+		else if(power > 0 && !topHalleffect.get()){
+			isValid = false;
+		}
+		else {
+			isValid = true;
+		}
 		
-		return true;
+		return isValid;
 	}
 	
 	public double getElevatorEncoder() {
@@ -59,6 +59,12 @@ public class Elevator extends Subsystem {
 		if(!this.validMove(speed)) speed = 0;
 		leftMotor.set(-speed);
 		rightMotor.set(speed);//may need flipped
+
+	}
+	
+	public void printHalleffects() {
+		System.out.println("Top HallEffect " + topHalleffect.get());
+		System.out.println("Bottom HallEffect " + bottomHalleffect.get());
 
 	}
 	

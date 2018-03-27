@@ -3,7 +3,7 @@ package org.usfirst.frc.team5188.robot.subsystems;
 import org.usfirst.frc.team5188.robot.RobotMap;
 import org.usfirst.frc.team5188.robot.commands.Drive;
 
-
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +18,9 @@ public class DriveTrain extends Subsystem {
 	private VictorSP rightDrive2;
 	private VictorSP strafe;
 
+	//Encoder tankEncoder = new Encoder(RobotMap.tankDriveEncoderA, RobotMap.tankDriverEncoderB);
 
+	
 	public DriveTrain() {
 		leftDrive1 = new VictorSP(RobotMap.frontLeft);
 		leftDrive2 = new VictorSP(RobotMap.backLeft);
@@ -27,6 +29,9 @@ public class DriveTrain extends Subsystem {
 		rightDrive2 = new VictorSP(RobotMap.backRight);
 		
 		strafe = new VictorSP(RobotMap.hWheel);
+		
+		//tankEncoder.setDistancePerPulse(.1);//set in inches
+
 
 	}
 
@@ -58,6 +63,17 @@ public class DriveTrain extends Subsystem {
 	protected void initDefaultCommand() {
 		setDefaultCommand(new Drive());
 	}
+	
+
+	public void resetTankEncoder() {
+	//	this.tankEncoder.reset();
+	}
+	
+	public double getTankEncoderDistance() {
+	//	return this.tankEncoder.getDistance();
+		return 0;
+	}
+			
 	
 	public void smartDashboard() {
 //		SmartDashboard.putNumber("DriveTrain Left", leftDrive1.get());

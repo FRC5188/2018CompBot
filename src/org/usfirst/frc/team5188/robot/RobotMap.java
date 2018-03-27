@@ -26,8 +26,13 @@ public class RobotMap {
 	public static final int leftElevator = 7;
 	public static final int rightElevator = 8;
 	
-//	public static final int bottomHalleffect = 0;
-//	public static final int topHalleffect = 1;
+	public static final int bottomHalleffect = 0;
+	public static final int topHalleffect = 1;
+	
+	public static final int tankDriveEncoderA = 2;
+	public static final int tankDriverEncoderB = 3;
+
+	
 //	public static final int elevatorEncoderA = 2;
 //	public static final int elevatorEncoderB = 3;
 

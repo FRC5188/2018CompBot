@@ -4,11 +4,15 @@ import org.usfirst.frc.team5188.robot.OI;
 import org.usfirst.frc.team5188.robot.Robot;
 import org.usfirst.frc.team5188.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //garrett is dumb
 public class Drive extends Command {
+	
+
+	
 	public Drive() {
 		requires(Robot.driveTrain);
 	}
@@ -45,6 +49,7 @@ public class Drive extends Command {
 		//ACTUAL DRIVE COMMAND
 		Robot.driveTrain.drive(lDrive, rDrive, strafe * .75);//was .8
 	}
+	
 
 	public void end() {
 		Robot.driveTrain.stop();

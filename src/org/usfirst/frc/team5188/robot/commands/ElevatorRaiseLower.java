@@ -21,7 +21,8 @@ public class ElevatorRaiseLower extends Command {
 	public void execute() {
 		double power = Robot.oi.operator.getAxis(OI.Axis.LY);
 
-
+		Robot.elevator.printHalleffects();
+		
 		Robot.elevator.move(power);
 	}
 
