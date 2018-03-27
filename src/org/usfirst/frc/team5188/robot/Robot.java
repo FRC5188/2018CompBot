@@ -33,11 +33,8 @@ public class Robot extends IterativeRobot {
 	public static Elevator elevator;
 	public static Timer timer = new Timer();
 	
-	//init auto choosers 
-	//SendableChooser<Command> driverStations = new SendableChooser<>();
 	SendableChooser<Command> rightAutoOptions = new SendableChooser<>();
 	SendableChooser<Command> leftAutoOptions = new SendableChooser<>();
-	SendableChooser<String> driverSide = new SendableChooser<>();
 
 
 	
@@ -85,17 +82,6 @@ public class Robot extends IterativeRobot {
 		driverSide.addObject(LEFT, LEFT);
 		driverSide.addObject(RIGHT, RIGHT);		
 				
-		//autoOptions.addObject("Center Right Switch", new CRSW());
-		//autoOptions.addObject("Center Left Switch", new CLSW());
-		//autoOptions.addObject("Right Scale", new SCR());
-		//autoOptions.addObject("Left Scale", new SCL());
-
-		
-////		driverStations.addDefault("Null", new NullCommand());
-////		driverStations.addObject("DriverStation 1", new DS1());
-////		driverStations.addObject("DriverStation 2", new DS2());
-////		driverStations.addObject("DriverStation 3", new DS3());
-//
 		SmartDashboard.putData("Right Auto Options", rightAutoOptions);
 		SmartDashboard.putData("Left Auto Options", leftAutoOptions);
 		SmartDashboard.putData("auto side", driverSide);
@@ -125,25 +111,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		gameData =  DriverStation.getInstance().getGameSpecificMessage();
+		delayLength = SmartDashboard.getNumber(TIMERBOX, 0);
 		
-		
-//		delayLength = SmartDashboard.getNumber(TIMERBOX, 0);
-		
-//		selectedAuto = rightAutoOptions.getSelected();
-		
-		
-		if(gameData.charAt(1) == 'L') {
-//			Timer.delay(delayLength);
-			selectedAuto = leftAutoOptions.getSelected();
-			
-			selectedAuto.start();
-			
-		} else {
-//			Timer.delay(delayLength);
-			selectedAuto = rightAutoOptions.getSelected();
-			selectedAuto.start();
-
-		}	}
+	}
 
 	
 	@Override
@@ -164,17 +134,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		
-//
-//		if(Robot.oi.operator.getRawButton(OI.Buttons.A)) {
-//			Scheduler.getInstance().add(new ElevatorRaiseTo(36));
-//			
-//		}
-//		
-//		
-//		if(Math.abs(Robot.oi.operator.getAxis(OI.Axis.LY)) > 0) {
-//			Scheduler.getInstance().add(new ElevatorRaiseLower());
-//		}
-		
 		if(Robot.oi.drive.getRawButton(OI.Buttons.X)) {
 			Command baseline = new BaseLineTime();
 			baseline.start();
@@ -188,24 +147,6 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 	}
 
-	public void smartDashboard() {
-		SmartDashboard.putData(Scheduler.getInstance());
-		
-//		driverStationPos = driverStations.getSelected().getName();
-		selectedAuto = rightAutoOptions.getSelected(); 
-
-		if(selectedAuto.getName().equals(baseTime)) SmartDashboard.putBoolean(baseTime, true);
-		if(selectedAuto.getName().equals(SWR)) SmartDashboard.putBoolean(SWR, true);
-		if(selectedAuto.getName().equals(SWL)) SmartDashboard.putBoolean(SWL, true);
-		if(selectedAuto.getName().equals(SCR)) SmartDashboard.putBoolean(SCR, true);
-		if(selectedAuto.getName().equals(SCL)) SmartDashboard.putBoolean(SCL, true);
-		if(selectedAuto.getName().equals(CLSW)) SmartDashboard.putBoolean(CLSW, true);
-		if(selectedAuto.getName().equals(CRSW)) SmartDashboard.putBoolean(CRSW, true);
-		
-		
-		SmartDashboard.putData(Robot.driveTrain);
-
-	}
 
 	/** Prevent button creep */
 	public static double deadband(double d) {

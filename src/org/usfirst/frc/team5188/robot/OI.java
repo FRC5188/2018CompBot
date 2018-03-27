@@ -76,9 +76,6 @@ public class OI {
 		drive = new SuperJoystickPlus(Controller.DRIVE);
 		operator = new SuperJoystickPlus(Controller.OPERATOR);
 		
-		JoystickButton goToSwitch = new JoystickButton(operator, OI.Buttons.A);
-
-		
 		
 		SmartDashboard.putData("DriveTraive", Robot.driveTrain);
 		SmartDashboard.putData("Elevator", Robot.elevator);
@@ -88,7 +85,6 @@ public class OI {
 		SmartDashboard.putData(Scheduler.getInstance());
 		
 		pref = Preferences.getInstance();
-		//rereadPreferences();
 	
 
 	}
