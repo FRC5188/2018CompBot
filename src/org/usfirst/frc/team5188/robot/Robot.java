@@ -79,12 +79,9 @@ public class Robot extends IterativeRobot {
 		leftAutoOptions.addObject("Scale Left Time", new ScaleLeftTime());
 		leftAutoOptions.addObject("Switch Left Time", new SwitchLeftSideTime());
 
-		driverSide.addObject(LEFT, LEFT);
-		driverSide.addObject(RIGHT, RIGHT);		
-				
+		
 		SmartDashboard.putData("Right Auto Options", rightAutoOptions);
 		SmartDashboard.putData("Left Auto Options", leftAutoOptions);
-		SmartDashboard.putData("auto side", driverSide);
 
 //		SmartDashboard.putData("Driver Stations", driverStations);
 
